@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'sdyl&g1^a$d#z&73ctx%ny@y8qf^@kvp6erl(b!e#tiqmc)dhq'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -123,20 +123,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-# Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-# Additional static file directories (optional)
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),  # If you have additional static files
+    os.path.join(BASE_DIR, 'staticfiles'),  # Example
 ]
-
-# Media files (user-uploaded content)
-MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
-
-# Redirect URL after login
-LOGIN_REDIRECT_URL = '/home/'
+MEDIA_URL = "/media/"
+LOGIN_REDIRECT_URL = "/home/"
