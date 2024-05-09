@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
-
+import dj_database_url  
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -123,11 +123,20 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+# Additional static file directories (optional)
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'staticfiles'),  # Example
+    os.path.join(BASE_DIR, 'static'),  # If you have additional static files
 ]
+
+# Media files (user-uploaded content)
+MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
-MEDIA_URL = "/media/"
-LOGIN_REDIRECT_URL = "/home/"
+
+# Redirect URL after login
+LOGIN_REDIRECT_URL = '/home/'
