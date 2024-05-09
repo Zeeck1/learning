@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+{% block title %}<title>My Course</title>{% endblock title %}
+
+
+{% block body %}
+
+<br><br>
+
+{% if course_obj %}
+<div class="container">
+    <div style="display: flex;">
+
+        <h2 style="letter-spacing: 5px;color:green;font-weight: bold;">
+          My courses-
+          </h2>
+          <h2 style="letter-spacing: 5px;color:green;font-weight: bold;" id="card-counter" onload="countCards()">
+             
+            </h2>
+       
+                  <script>
+                    document.addEventListener("DOMContentLoaded", function() { // This function is called when the DOM is loaded
+                        const cards = document.getElementsByClassName("card"); // Get all elements with class 'card'
+                        const cardCount = cards.length; // Get the total count
+                        const counterElement = document.getElementById("card-counter"); // Find the element to display the count
+                        
+                        if (counterElement) {
+                            counterElement.textContent = cardCount; // Display the count
+                        }
+                    });
+                </script>
+      </div>
+  <hr>
+    <div class="row">
+        {% for course in course_obj %}
+        <div class="col-lg-3" style="margin-bottom: 10px;margin-top: 10px; ">
+            
+            <div class="card h-100" style="border-radius: 7px;">
+                <img class="card-img-top" style="border-radius: 10px;" src="{{course.thumbnail.url}}" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title" style="font-size: medium;">{{course.name|truncatechars:100}}</h5>
+                    <p class="card-text" style="color: grey;font-size: small;">{{course.author|truncatechars:30}}</p>
+                    <a href="{% url 'course' slug=course.slug %}"  style="width:100%" class="btn btn-success">Go To Course</a>
+                </div>
+            </div>
+        </div>
+
+        {% endfor %}
+    </div>
+    <style>
+         .active_cu{
+            border-top: 2px solid gold;
+                    color: gold !important;
+
+                   
+                }
+    </style>
+</div>
+{% else %}
+
+<h4 style="text-align:center;color:white; background-color: rgba(255, 0, 0, 0.753); padding: 10px;">You haven't enrolled any course yet</h4>
+{% endif %}
+
+
+<div class="container" style="margin-top: 20px;">
+    <footer class="py-3 my-4">
+      <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+        <!-- <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Home</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Features</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Pricing</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">FAQs</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">About</a></li> -->
+      </ul>
+      <center>
+      <p class="text-muted">© <span id="current-year"></span> C.K Frozen Fish and Foods CO.,LTD. All rights reserved.</p> 
+
+      </center>
+      <script>
+        // Function to update the current year in the element with id 'current-year'
+        function updateCurrentYear() {
+            const currentYear = new Date().getFullYear(); // Get the current year
+            const yearElement = document.getElementById("current-year"); // Find the element
+            if (yearElement) {
+                yearElement.textContent = currentYear; // Set the text to the current year
+            }
+        }
+    </script>
+    </footer>
+  </div>
+{% endblock body %}

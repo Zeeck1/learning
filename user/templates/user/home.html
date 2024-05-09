@@ -1,0 +1,201 @@
+{% extends 'base.html' %}
+
+{% block title %}<title>Home</title>{% endblock title %}
+
+
+
+{% block body %}
+
+
+{% if course_obj %}
+<br>
+<section id="home-section"></section>
+<div class="container" >
+  <div style="display: flex;">
+
+    <h2 style="letter-spacing: 5px;color:green;font-weight: bold;">
+      Courses-
+      </h2>
+      <h2 style="letter-spacing: 5px;color:green;font-weight: bold;" id="card-counter" onload="countCards()">
+         
+        </h2>
+       
+        
+              <script>
+                document.addEventListener("DOMContentLoaded", function() { // This function is called when the DOM is loaded
+                    const cards = document.getElementsByClassName("card"); // Get all elements with class 'card'
+                    const cardCount = cards.length; // Get the total count
+                    const counterElement = document.getElementById("card-counter"); // Find the element to display the count
+                    
+                    if (counterElement) {
+                        counterElement.textContent = cardCount; // Display the count
+                    }
+                });
+            </script>
+  </div>
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <script>
+    function filterCourses() {
+        // Get the search query
+        var query = document.getElementById("search-bar").value.toLowerCase();
+
+        // Get all the cards
+        var cards = document.getElementsByClassName("card");
+
+        // Flag to track if there's at least one match
+        var hasMatches = false;
+
+        // Loop through all the cards and hide or show them based on the query
+        for (var i = 0; i < cards.length; i++) {
+            var card = cards[i];
+
+            // Get the course name and author from the card
+            var courseName = card.querySelector(".card-title").innerText.toLowerCase();
+            var courseAuthor = card.querySelector(".fa-user-pen").parentElement.innerText.toLowerCase();
+
+            // Check if the query is in the course name or author
+            if (courseName.includes(query) || courseAuthor.includes(query)) {
+                card.style.display = ""; // Show the card
+                hasMatches = true;
+            } else {
+                card.style.display = "none"; // Hide the card
+            }
+        }
+
+        // If no matches were found, display "No result"
+        var noResult = document.getElementById("no-result");
+        if (hasMatches) {
+            noResult.style.display = "none"; // Hide "No result"
+        } else {
+            noResult.style.display = "block"; // Show "No result"
+        }
+    }
+</script>
+<div class="container mt-1">
+  <center>
+  <div class="search_div_1">
+    <input type="text" id="search-bar" class="form-control"  placeholder="Search courses and authors" oninput="filterCourses()">
+    <button type="submit" class="btn btn-secondary" style="margin-left: -5px;">
+      <i class="fa fa-magnifying-glass"></i>
+    </button>
+  </div></center>
+  <style>
+    .search_div_1{
+      display: flex;
+      width: 30%;
+    }
+    @media (max-width: 600px) {
+    .search_div_1 {
+      width: 100%;
+    }
+  }
+  </style>
+</div>
+<center>
+<div id="no-result" class="mt-4" style="display: none; text-align: center; width: 50%; ">
+  <p style="background-color: rgb(167, 53, 53); color: white; padding: 5px;border-radius: 6px; ">No result found. Please try a different search term.</p>
+</div></center>
+
+<br>
+
+    <div class="row">
+        {% for course in course_obj %}
+        <div class="col-lg-4" style="margin-bottom: 10px;margin-top: 10px;">
+            <div class="card h-100" style="background-color: white; border-radius: 10px; border: none; position: relative;">
+                <center>
+                    <a href="{% url 'enroll_course' slug=course.slug %}">
+                  <img class="card-img-top" style="border-radius: 10px; width: 90%; margin-top: 10px;" src="{{course.thumbnail.url}}" alt="Card image cap">
+                </a>
+                  <div class="bookmark-text">
+                    <i class="fa fa-book-open-reader"></i>
+                    {{course.enrolled_count}}</div>
+                </center>
+              
+                <div class="card-body">
+                  <h5 class="card-title" style="font-size: medium; color: black;">{{course.name|truncatechars:100}}</h5>
+                  <hr>
+                  <p class="card-text" style="color: rgb(184, 169, 169);font-size: small; font-weight: 400;">
+                    <i class="fa-solid fa-user-pen"></i> {{course.author|truncatechars:42}}
+                  </p>
+                  <p class="card-text" style="color: rgb(184, 169, 169);font-size: small; font-weight: 400; margin-top: -10px;">
+                    <i class="fa-solid fa-clock"></i>  {{course.created_at}}
+
+                  </p>
+
+                  
+                  {% if request.user and course.id in user_enrolled_course_list %}
+                  <a href="{% url 'enroll_course' slug=course.slug %}" style="float: right;width:100%" class="btn btn-outline-success">Enrolled</a>
+                  {% else %}
+                  <a href="{% url 'enroll_course' slug=course.slug %}" style="float: right;width:100%" class="btn btn-success">Enroll </a>
+                  {% endif %}
+                </div>
+              </div>
+
+
+        
+              
+              <style>
+                .active_ho{
+                    border-top: 2px solid gold;
+                    color: gold !important;
+
+                    
+                }
+            </style>
+
+
+              <style>
+                .bookmark-text {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: rgba(255, 255, 255, 0.705);
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: bold;
+  /* color: #333; */
+  
+}
+              </style>
+        </div>
+
+        {% endfor %}
+    </div>
+</div>
+{% else %}
+<h4 style="text-align:center;color:white; background-color: rgba(255, 0, 0, 0.753); padding: 10px;">No course available right now!</h4>
+
+
+{% endif %}
+
+
+<div class="container" >
+  <footer class="py-3 my-4">
+    <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+      <!-- <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Home</a></li>
+      <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Features</a></li>
+      <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Pricing</a></li>
+      <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">FAQs</a></li>
+      <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">About</a></li> -->
+    </ul>
+    <center>
+    <p class="text-muted">© <span id="current-year"></span> C.K Frozen Fish and Foods CO.,LTD. All rights reserved.</p> 
+
+    </center>
+    <script>
+      // Function to update the current year in the element with id 'current-year'
+      function updateCurrentYear() {
+          const currentYear = new Date().getFullYear(); // Get the current year
+          const yearElement = document.getElementById("current-year"); // Find the element
+          if (yearElement) {
+              yearElement.textContent = currentYear; // Set the text to the current year
+          }
+      }
+  </script>
+  </footer>
+</div>
+
+
+{% endblock body %}

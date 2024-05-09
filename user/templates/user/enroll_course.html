@@ -1,0 +1,132 @@
+{% extends 'base.html' %}
+
+{% block title %}<title>{{course_obj.name}}</title>{% endblock title %}
+
+
+{% block body %}
+<link rel="icon" href="../static/images/head_logo.jpg">
+
+<br>
+<style>
+    .header_1{
+        display: none;
+    }
+</style>
+
+<div class="container">
+    <span>
+        <a  href="{% url 'home' %}">Home</a>
+        </span>
+    <span>></span>
+    <span>Course detail</span>
+</div>
+
+<br>
+<div class="container" style=" border-radius: 10px;">
+
+    <div class="row">
+        <div class="col-md-4" style="margin-top: 10px;">
+            <img style="border-radius: 10px;" width="100%" height="200px" src="{{course_obj.thumbnail.url}}">
+
+        </div>
+        <div class="col-md-8 " style="background-color: white; border-radius: 3px; border-left: 2px solid rgba(238, 238, 8, 0.719); padding: 15px; margin-top: 10px;">
+            <p style="font-weight:bold;font-size: larger;">Course Name : {{course_obj.name}}</p>
+            <p><b>Description:</b> {{course_obj.description}}</p>
+            <p style="margin-bottom: 2px;">
+                <b>Author:</b> {{course_obj.author}}</p>
+            <p style="margin-bottom: 2px;">
+                <b> Duration:</b>
+                {{course_obj.duration}}</p>
+            <p style="margin-bottom: 2px;">
+                <b>Total Viewed:</b>
+                 {{course_obj.enrolled_count}}</p>
+            <p style="margin-bottom: 2px;font-style: italic">
+                <b>Last updated:</b>
+                 {{course_obj.updated_at}}</p>
+            <br>
+                {% if enrolled %}
+                <a style="text-decoration: none; color: white;" href="{% url 'course' slug=course_obj.slug %}" >
+                <button class="btn btn-success" style="float: right;">
+                    Go To Course
+                </button></a>
+                    <br><br>
+                {% else %}
+               
+                    <form method="post">
+                    {% csrf_token %}
+                        <input type="hidden" name="course_id" value="{{course_obj.id}}">
+                        <button style="float: right;width:20%" class="btn btn-outline-success">Enroll</button>
+                    </form>
+                {% endif %}
+                
+        </div> 
+    </div>
+</div>
+
+<br><br>
+
+{% if lesson_obj %}
+<div class="container" >
+    <table class="table" style="background-color: rgba(255, 255, 255, 0.466); border-radius: 15px;">
+        <thead class="thead-light">
+            <tr>
+                <th>No.</th>
+                <th>Lesson Name</th>
+                <th>Lesson Duration</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for lesson in lesson_obj %}
+            <tr>
+                <td>{{forloop.counter}}</td>
+                <td>{{lesson.name}}</td>
+                <td>{{lesson.duration}}</td>
+            </tr>
+            {% endfor %}
+            {% if quiz_obj %}
+            <tr>
+                <td>N/A</td>
+                <td>
+                    <b>  Quiz (Total {{quiz_obj|length}} Questions)</b>
+                  </td>
+                <td>N/A</td>
+            </tr>
+            {% endif %}
+        </tbody>
+    </table>
+</div>
+{% else %}
+
+<h4 style="text-align:center;color:white; background-color: rgba(255, 0, 0, 0.753); padding: 10px;">Not any lessons added in this course right now!</h4>
+
+
+
+{% endif %}
+
+
+<div class="container" >
+    <footer class="py-3 my-4">
+      <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+        <!-- <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Home</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Features</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">Pricing</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">FAQs</a></li>
+        <li class="nav-item"><a href="#" class="nav-link px-2 text-muted">About</a></li> -->
+      </ul>
+      <center>
+      <p class="text-muted">© <span id="current-year"></span> C.K Frozen Fish and Foods CO.,LTD. All rights reserved.</p> 
+
+      </center>
+      <script>
+        // Function to update the current year in the element with id 'current-year'
+        function updateCurrentYear() {
+            const currentYear = new Date().getFullYear(); // Get the current year
+            const yearElement = document.getElementById("current-year"); // Find the element
+            if (yearElement) {
+                yearElement.textContent = currentYear; // Set the text to the current year
+            }
+        }
+    </script>
+    </footer>
+  </div>
+{% endblock body %}

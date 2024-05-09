@@ -1,0 +1,306 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    {% block title %}{% endblock title %}
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+      <link rel="icon" href="{% static 'images/head_logo.jpg' %}">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"> </script>
+    <link rel="stylesheet" href="../static/css/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <!-- Include Font Awesome CSS -->
+    <script type="text/javascript">
+      function googleTranslateElementInit() {
+          new google.translate.TranslateElement(
+              {
+                  defaultLanguage: 'en',
+                  uiLanguage: 'en',
+                  pageLanguage: 'en', // Default content language
+                  includedLanguages: 'en,my,th,vi', // Include only English, Myanmar, and Thai
+                  layout: google.translate.TranslateElement.InlineLayout.SIMPLE // Dropdown layout
+              },
+              'google_translate_element' // Place the widget here
+          );
+      }
+  </script>
+
+  <!-- Load Google Translate script -->
+  <!-- <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script> -->
+
+
+  <script src="{% static '/js/element.js' %}"></script>
+    {% block header %}{% endblock header %}
+</head>
+<body style="background-color: rgba(243, 244, 247, 0.952);" onload="updateCurrentYear()">
+
+
+<style>
+  .hero {
+width: 100%;
+
+
+background-color: var(--color-secondary);
+background-image: url("{% static 'images/df.jpg' %}");
+background-size: cover;
+background-position: center;
+position: relative;
+padding: 0 0 60px 0;
+color: rgba(255, 255, 255, 0.8);
+}
+
+.tags{
+color: rgb(7, 179, 7);
+font-size: 15px;
+font-weight: bold;
+}
+.sticky-nav {
+    position: sticky !important;
+    top: 0;
+    z-index: 1000;
+}
+</style>
+
+<nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-nav">
+    <div class="container">
+  <a class="navbar-brand" href="{% url 'home' %}">
+    <img src="{% static 'images/main_logo.png' %}" width="40px" height="45px">
+  </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+     <ul class="navbar-nav mr-auto">
+      {% if request.user.is_authenticated %}
+      <li class="nav-item " style="margin-left: 20px;">
+       
+              
+           <!-- <a  class="nav-link active_ho" style="text-decoration: none; color: white; font-size: 20px;"  href="{% url 'home' %}">Home</a> -->
+           <a class="nav-link active_ho" style="text-decoration: none; color: white; font-size: 20px;" href="{% url 'home' %}#home-section">Home</a>
+       
+      </li>
+      <li class="nav-item " style="margin-left: 20px;">
+        <a  class="nav-link active_cu" style="text-decoration: none; color: white; font-size: 20px;"  href="{% url 'my_course' %}">
+          My Course</a>
+      
+      </li>
+      {% endif %}
+    </ul>
+  {% if request.user.is_authenticated %}
+  <!-- <select >
+   
+      <option value="eng">English</option>
+      <option value="th">Thai</option>
+      <option value="mm">Burmese</option>
+ 
+  </select>  -->
+
+  <style>
+    
+    select{
+  border:none;
+  padding: 7px 12px;
+  border-radius:5px;
+  background-color: aliceblue;
+}
+.hero .stats-item {
+padding: 30px;
+width: 100%;
+} 
+
+.hero .stats-item span {
+font-size: 32px;
+display: block;
+font-weight: 700;
+margin-bottom: 15px;
+padding-bottom: 15px;
+position: relative;
+}
+
+.hero .stats-item span:after {
+content: "";
+position: absolute;
+display: block;
+width: 20px;
+height: 3px;
+background: var(--color-primary);
+left: 0;
+right: 0;
+bottom: 0;
+margin: auto;
+}
+
+.hero .stats-item p {
+padding: 0;
+margin: 0;
+font-family: var(--font-primary);
+font-size: 15px;
+font-weight: 600;
+}
+  </style> &nbsp;&nbsp;&nbsp;&nbsp;
+    <div class="text-end" style="margin-top: 5px;">
+      <i class="fa fa-user" style="color: white;"></i>
+      <!-- <span  style="color: white;">dfdfsfdfdfdfdfdffhfedfdgderteedfdcdhge</span>    -->
+      <span  style="color: white;">{{ user.username|truncatechars:35}}</span>   
+      <div class="btn " id="google_translate_element"></div>
+
+        <a role="button" href="{% url 'logout' %}" class="btn btn-outline-danger">Logout
+
+          <i class="fa fa-right-from-bracket"></i>
+        </a>
+    </div>
+  {% else %}
+    <div class="text-end" style="display: flex;">
+        <div class="btn " id="google_translate_element"></div>
+
+        <a role="button" href="{% url 'login' %}" class="btn btn-outline-light me-5">Login</a> &nbsp;&nbsp;
+        <a role="button" href="{% url 'sign_up' %}" class="btn btn-primary">Sign-up</a>
+    </div>
+  {% endif %}
+  </div>
+  </div>
+
+</nav>
+
+<section id="hero" class="hero d-flex align-items-center content" >
+  
+  <div class="container">
+    <div class="row gy-4 d-flex justify-content-between">
+      <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center"><br>
+        <h2 data-aos="fade-up" style="color: black;">CK E-Learning System</h2>
+        <p data-aos="fade-up" data-aos-delay="100" style="color: gray;">
+        Let's watch and learn about CK system and enjoy with your own environment. Please make sure your acccount is created with CK E-Learning system.  
+        <br>
+        มาดูและเรียนรู้เกี่ยวกับระบบ CK และสนุกไปกับสภาพแวดล้อมของคุณเอง โปรดตรวจสอบให้แน่ใจว่าบัญชีของคุณถูกสร้างขึ้นด้วยระบบ CK E-Learning
+        </p>
+
+        <!-- <form action="#" class="form-search d-flex align-items-stretch mb-3" data-aos="fade-up" data-aos-delay="200">
+          <input type="text" class="form-control" placeholder="ZIP code or CitY">
+          <button type="submit" class="btn btn-primary">Search</button>
+        </form> -->
+
+        <div class="row gy-4" data-aos="fade-up" >
+
+          <div class="col-lg-6 col-6">
+            <div class="stats-item text-center w-100 h-100">
+              <span  class="tags">
+                4
+              </span>
+              
+              <div style="margin-top: -15px;">
+                <hr style="border-color: yellow;">
+                <p>ภาษา</p>
+
+              </div>
+            </div>
+          </div><!-- End Stats Item -->
+
+          <div class="col-lg-6 col-6">
+            <div class="stats-item text-center w-100 h-100">
+             
+              <span  class="tags">
+                5+
+              </span>
+             
+            
+              <div style="margin-top: -15px;">
+              
+                <hr style="border-color: yellow;">
+                <p>บทเรียน</p>
+              
+              
+              </div>
+            </div>
+          </div><!-- End Stats Item -->
+
+         
+
+         
+
+        </div>
+      </div>
+
+      <div class="col-lg-5 order-1 order-lg-2 hero-img" data-aos="zoom-out">
+        <img src="{% static 'images/aaf.png' %}" class="img-fluid mb-3 mb-lg-0" alt="">
+      </div>
+
+    </div>
+  </div>
+</section><!-- End Hero Section -->
+<!-- <center>
+<div class="container">
+  <div >
+    
+      <div >
+        <a  href="{% url 'home' %}">
+          <img src="{% static 'images/logo2.png' %}" width="90px" height="95px">
+        </a>
+      </div>
+      <div style="display: block;margin-bottom: auto;margin-top: auto;">
+          <h2 style="letter-spacing: 10px;color:green;font-weight: bold;">
+          Courses
+          </h2>
+      </div>
+  </div>
+</div></center> -->
+
+<div>
+  
+</div>
+
+<!-- <div >
+  <br>
+<center class="container" style="background-color: rgba(0, 0, 0, 0.76); padding: 5px; ">
+  {% if request.user.is_authenticated %}
+    
+      <span style="margin-right: 50px; font-size: 30px;" >
+        
+        <a style="text-decoration: none; color: white;" class="active_ho" href="{% url 'home' %}">
+        
+        Home</a>
+    
+      </span>
+    <span style=" font-size: 20px; color: white;">
+      |
+    </span>
+      
+     
+    
+        <span style="margin-left: 50px;  font-size: 30px;">
+       
+          <a style="text-decoration: none; color: white;" class="active_cu" href="{% url 'my_course' %}">
+          My courses</a>
+        </span>
+    
+        {% endif %}</center>
+        
+</div> -->
+<!-- <ul class="navbar-nav mr-auto">
+  {% if request.user.is_authenticated %}
+  <li class="nav-item active">
+    <a class="nav-link" href="{% url 'home' %}">Home</a>
+  </li>
+  <li class="nav-item active">
+    <a class="nav-link" href="{% url 'my_course' %}">My Course</a>
+  </li>
+  {% endif %}
+</ul> -->
+
+
+
+{% block body %}{% endblock body %}
+
+
+{% block script %}{% endblock script %}
+
+</body>
+</html>
