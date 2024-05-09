@@ -124,21 +124,24 @@ USE_TZ = True
 
 
 
+
+# Base directory of the Django project
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# URL to access static files
-STATIC_URL = '/static/'
+# Static files configuration
+STATIC_URL = '/static/'  # URL for accessing static files
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # Directory for collected static files
 
-# Directory where collected static files are stored
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-
-# Additional directories to look for static files (optional)
+# Optional: Additional static file directories
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, 'static'),  # Additional static files
 ]
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
-MEDIA_URL = "/media/"
-LOGIN_REDIRECT_URL = "/home/"
+# Media files configuration
+MEDIA_URL = '/media/'  # URL for accessing media files
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')  # Directory for storing media files
+
+# Authentication redirect
+LOGIN_REDIRECT_URL = '/home/'  # Redirect after successful login
 
 
