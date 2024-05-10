@@ -66,7 +66,19 @@
                         <label for="show-password">Show Password</label>
 
                         <span style="float: right; color: blue; cursor: pointer;" id="open-popup">Forgot password?</span>
-                        
+                        <script>
+                            function togglePassword() {
+    const passwordField = document.getElementById("id_password");
+    const toggleCheckbox = document.getElementById("show-password");
+
+    if (toggleCheckbox.checked) {
+        passwordField.type = "text"; // Show the password
+    } else {
+        passwordField.type = "password"; // Hide the password
+    }
+}
+
+                        </script>
 
                         <!-- The pop-up/modal container -->
                     
