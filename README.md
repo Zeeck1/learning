@@ -1,12 +1,12 @@
-# E-learning Management System
+# C.K E-learning Management System
 
 ## How to Run
 
 **1. Pull the Docker Image from Cloud**
 <br>
-`docker pull tracebackerror/elearning_web_app:latest`
+`py manage.py runserver`
 
 
 **2. Run the Container**
 <br>
-`docker run -d -p 8000:8000 tracebackerror/elearning_management_system`
+`py run -d -p 8000:8000 tracebackerror/elearning_management_system`
