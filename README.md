@@ -10,3 +10,4 @@
 **2. Run the Container**
 <br>
 `py run -d -p 8000:8000 tracebackerror/elearning_management_system`
+developed by Zee and licensed to C.K
