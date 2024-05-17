@@ -68,3 +68,4 @@ admin.site.register(User, CustomUserAdmin)  # Register the custom UserAdmin
 
 # Set custom site header for the admin site
 admin.site.site_header = "C.K E-Learning System Admin Site"  # Custom admin site header
+admin.site.site_title = "C.K E-Learning System Admin Site"
