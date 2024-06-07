@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+import dj_database_url
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -20,10 +21,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'sdyl&g1^a$d#z&73ctx%ny@y8qf^@kvp6erl(b!e#tiqmc)dhq'
+SECRET_KEY = os.environ.get('SECRET_KEY', 'sdyl&g1^a$d#z&73ctx%ny@y8qf^@kvp6erl(b!e#tiqmc)dhq')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
 ALLOWED_HOSTS = ['*']
 
@@ -76,14 +77,10 @@ WSGI_APPLICATION = 'eLearning.wsgi.application'
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        'USER': 'admin',  # PostgreSQL user
-        'PASSWORD': '12345',  # Password for the user
-    }
+    'default': dj_database_url.config(
+        default=os.environ.get('DATABASE_URL', 'sqlite:///db.sqlite3')
+    )
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -109,7 +106,6 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-# TIME_ZONE = 'UTC'
 TIME_ZONE = 'Asia/Bangkok'
 
 USE_I18N = True
@@ -122,13 +118,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-
-
-
-# Base directory of the Django project
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-# Static files configuration
 STATIC_URL = '/static/'  # URL for accessing static files
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # Directory for collected static files
 
@@ -139,9 +128,24 @@ STATICFILES_DIRS = [
 
 # Media files configuration
 MEDIA_URL = '/media/'  # URL for accessing media files
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')  # Directory for storing media files
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # Directory for storing media files
 
 # Authentication redirect
 LOGIN_REDIRECT_URL = '/home/'  # Redirect after successful login
 
+# Add this if you use any custom storage backends for handling static/media files
+# Example for AWS S3:
+# DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+# STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
+# Configure secure proxy SSL header if behind a proxy (like Render.com)
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+# Enable security features for production
+SECURE_HSTS_SECONDS = 3600
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+X_FRAME_OPTIONS = 'DENY'
