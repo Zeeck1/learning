@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
-import dj_database_url
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -25,7 +25,7 @@ SECRET_KEY = 'sdyl&g1^a$d#z&73ctx%ny@y8qf^@kvp6erl(b!e#tiqmc)dhq'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['ck-elearning.onrender.com']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -79,9 +79,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'USER': 'admin',  # PostgreSQL user
+        'PASSWORD': '12345',  # Password for the user
     }
 }
-
 
 
 # Password validation
